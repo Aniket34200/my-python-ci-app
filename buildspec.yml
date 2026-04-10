@@ -3,17 +3,22 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing dependencies...
-      - pip install -r requirements.txt || echo "No requirements file"
+      - echo Installing Docker support...
+
+  pre_build:
+    commands:
+      - echo Build started on `date`
 
   build:
     commands:
-      - echo Running unit tests
-      - python test_math.py
+      - echo Building Docker image...
+      - docker build -t myapp .
+      - echo Running Docker container...
+      - docker run myapp
 
   post_build:
     commands:
-      - echo Build completed
+      - echo Build completed on `date`
 
 artifacts:
   files:
